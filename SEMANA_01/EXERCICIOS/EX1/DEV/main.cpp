@@ -1,11 +1,46 @@
 #include <iostream>
 #include <string>
 
+using namespace std;
+
 // 1 -  Faça uma função que recebe uma certa medida e ajusta ela percentualmente 
 // entre dois valores mínimo e máximo e retorna esse valor
 
+float percentual(float min, float max, float value){
+  float intervalo = max - min;
+  float valor = (value-min)/intervalo;
+  float percentual = valor*100;
+  return percentual;
+}
+
+float ex1(){
+  cout << "ex1:" << endl;
+  float min = 0;
+  float max = 0;
+  float value = 0;
+  cout << "valor minimo" << endl;
+  cin >> min;
+  cout << "valor maximo" << endl;
+  cin >> max;
+  cout << "valor" << endl;
+  cin >> value;
+  float result = percentual(min, max, value);
+  cout << result << "%" << endl;
+  return result;
+}
+
+
 // 2 - Faça uma função que simule a leitura de um sensor lendo o 
 // valor do teclado ao final a função retorna este valor
+
+string ex2(){
+  //cout << "ex2:" << endl;
+  cout << "aperta alguma coisa no telado"<< endl;
+  string value;
+  getline (cin, value);
+  cout << value;
+  return(value);
+}
 
 // 3 - Faça uma função que armazena uma medida inteira qualquer 
 // em um vetor fornecido. Note que como C não possui vetores 
@@ -14,7 +49,54 @@
 // Evite também que, por acidente, um valor seja escrito em 
 // uma área de memória fora do vetor
 
+int insereVetor(int num, int *lastPos, int Numbers[]){
+  (*lastPos)++;
+  Numbers[*lastPos] = num;
+  return 0;
+}
 
+int ex3(){
+  
+  int valorMax = 10;
+  int lastPos = -1;
+  int Numbers[valorMax];
+  
+  insereVetor(9, &lastPos, Numbers);
+
+  insereVetor(8, &lastPos, Numbers);
+
+  insereVetor(7, &lastPos, Numbers);
+
+  insereVetor(6, &lastPos, Numbers);
+
+  insereVetor(5, &lastPos, Numbers);
+
+  insereVetor(4, &lastPos, Numbers);
+
+  insereVetor(3, &lastPos, Numbers);
+  
+  insereVetor(2, &lastPos, Numbers);
+
+  insereVetor(1, &lastPos, Numbers);
+
+  insereVetor(0, &lastPos, Numbers);
+
+  insereVetor(100, &lastPos, Numbers);
+  
+  // valor esperado: mensagem de erro "Erro: valorMax: 10, lastPos + 1 (indice): 10"
+  
+  cout << Numbers[0] << endl; // valor esperado: 9
+  cout << Numbers[1] << endl; // valor esperado: 8
+  cout << Numbers[2] << endl; // valor esperado: 7
+  cout << Numbers[3] << endl; // valor esperado: 6
+  cout << Numbers[4] << endl; // valor esperado: 5
+  cout << Numbers[5] << endl; // valor esperado: 4
+  cout << Numbers[6] << endl; // valor esperado: 3
+  cout << Numbers[7] << endl; // valor esperado: 2
+  cout << Numbers[8] << endl; // valor esperado: 1
+  cout << Numbers[9] << endl; // valor esperado: 0
+  return 0;
+}
 
 // 4 - Faça uma função que recebe um vetor com 4 posições que contém 
 // o valor da distância de um pequeno robô até cada um dos seus 4 lados.
@@ -22,12 +104,74 @@
 // de maior distância ("Direita", "Esquerda", "Frente", "Tras") e a 
 // segunda é esta maior distância.
 
+float maiorDir(float vetor[]){
+  float n = 0;
+  for (int i=0; i < 4; i++){
+    if (vetor[i]>n){
+        n=vetor[i];
+      }
+  }
+  return n; 
+}
 
+string dirMaiorDir(float vetor[]){
+  float n = 0;
+  int dir;
+  for (int i=0; i < 4; i++){
+    if (vetor[i]>n){
+        n=vetor[i];
+        dir = i;
+      }
+  }
+  if (dir == 0){
+    return "Direita";
+  }
+   if (dir == 1){
+    return "Esquerda";
+  }
+   if (dir == 2){
+    return "Frente";
+  }
+   if (dir == 3){
+    return "Tras";
+  }
+}
 
+int ex4() {
+  
+  float vetor[4] = {0,3.98,890.51,221};
+  // "Direita", "Esquerda", "Frente", "Tras"
+
+  cout<< maiorDir(vetor)<<endl;
+  cout<<dirMaiorDir(vetor)<<endl;
+  return 0;
+}
 
 // 5 - Faça uma função que pergunta ao usuário se ele deseja continuar o mapeamento e 
 // retorna verdadeiro ou falso
 
+bool continuar(){
+  string ans;
+  cout<<"deseja parar?(s/n?)";
+  cin >> ans;
+
+  if (ans == "s"){
+    return(true);
+  }
+  else{
+    return(false);
+  }
+}
+
+int ex5(){
+  int parar = false;
+  
+  while (!parar){
+    parar = continuar();
+  }
+  cout<<"parado";
+  return 0;
+}
 
 // 6 - A função abaixo (que está incompleta) vai "dirigindo" virtualmente um robô 
 // e através de 4 sensores em cada um dos 4 pontos do robo ("Direita", "Esquerda", 
@@ -41,47 +185,30 @@
 //      Para simular os sensores e os comandos de pare, use as funções já construídas 
 // nos ítens anteriores e em um looping contínuo até que um pedido de parada seja 
 // enviado pelo usuário. 
-//
-//      Complete a função com a chamada das funções já criadas
-int dirige(int *v,int maxv){
-	int maxVetor = maxv;
-	int *vetorMov = v;
-	int posAtualVetor = 0;
-	int dirigindo = 1;		
-	while(dirigindo){		
-		int medida = /// .. Chame a função de de leitura da medida para a "Direita"
-		medida = converteSensor(medida,0,830);
-		posAtualVetor = // Chame a função para armazenar a medida no vetor
-        ///////////////////////////////////////////////////////////////////////////		
-		// Repita as chamadas acima para a "Esquerda", "Frente", "Tras"
-		// ................
-		///////////////////////////////////////////////////////////////////////////
-		dirigindo = leComando();		
-	}
-	return posAtualVetor;
-}
 
 
-// O trecho abaixo irá utilizar as funções acima para ler os sensores e o movimento
-// do robô e no final percorrer o vetor e mostrar o movimento a cada direção baseado 
-// na maior distância a cada movimento
-void percorre(int *v,int tamPercorrido){		
-	int *vetorMov = v;
-	int maiorDir = 0;
-	
-	for(int i = 0; i< tamPercorrido; i+=4){
-		char *direcao = direcaoMenorCaminho(&(vetorMov[i]),&maiorDir);
-		printf("Movimentando para %s distancia = %i\n",direcao,maiorDir);
-	}
-}
 
-int main(int argc, char** argv) {
-	int maxVetor = 100;
-	int vetorMov[maxVetor*4];
-	int posAtualVet = 0;
-	
-	posAtualVet = dirige(vetorMov,maxVetor);
-	percorre(vetorMov,posAtualVet);
-	
-	return 0;
-}
+
+
+
+//fuções main() para teste individuald de cada exercicio:
+
+/*int main(){
+  ex1();
+}*/
+
+/*int main(){
+  ex2();
+}*/
+
+/*int main(){
+  ex3();
+}*/
+
+/*int main(){
+  ex4();
+}*/
+
+/*int main(){
+  ex5();
+}*/
