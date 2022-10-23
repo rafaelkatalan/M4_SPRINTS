@@ -186,6 +186,71 @@ int ex5(){
 // nos ítens anteriores e em um looping contínuo até que um pedido de parada seja 
 // enviado pelo usuário. 
 
+//Não consegui entender direito a função incompleta, então escrevi uma do zero na qual são passadas as distancias das 4 direções e o robo se move para a 
+//direção de maior distancia. A função simula que o robo está em uma sala sem nada com 4 paredes, desta
+//forma, ele anda sozinho e quando se aproxima de uma parede, se afasta da outra.
+
+
+int leComando(int *dirigindo){
+  cout<< "continua?(s = 1; n = 0)";
+  int resp;
+  cin >>resp;
+  (*dirigindo)= resp;
+  return 0;
+}
+
+float dirige(float vetor[]){
+  int dirigindo = 1;
+  while (dirigindo == 1){
+    float n = 0;
+    int dir;
+    for (int i=0; i < 4; i++){
+      if (vetor[i]>n){
+        n=vetor[i];
+        dir = i;
+      }
+    }
+    if(dir == 0){
+      vetor[1]+=1;
+      vetor[0]-=1;
+    }
+    if(dir == 1){
+      vetor[0]+=1;
+      vetor[1]-=1;
+    }
+    if(dir == 2){
+      vetor[3]+=1;
+      vetor[2]-=1;
+    }
+    if(dir == 3){
+      vetor[2]+=1;
+      vetor[3]-=1;
+    }
+    
+    
+    cout<<"posição atual: [";
+    for (int i = 0; i<4; i++){
+      cout<<vetor[i]<<",";
+    }
+    cout<<"]"<<endl;
+    leComando(&dirigindo);
+  }
+  return 0;
+}
+
+int ex6() {
+  
+  float vetor[4] = {5,23,25,10};
+  // "Direita", "Esquerda", "Frente", "Tras"
+  dirige(vetor);
+  cout<<"posição final:"<<endl<<"[";
+  for (int i = 0; i<4; i++){
+    cout<<vetor[i]<<",";
+  }
+  cout<<"]"<<endl;
+  
+  return 0;
+}
 
 
 
@@ -211,4 +276,8 @@ int ex5(){
 
 /*int main(){
   ex5();
+}*/
+
+/*int main(){
+  ex6();
 }*/
